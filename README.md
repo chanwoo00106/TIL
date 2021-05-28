@@ -4,9 +4,9 @@
 
 ## display
 
-[Flexbox](./flexbox)
+[Flexbox](https://github.com/chanwoo00106/css/blob/master/flexbox)
 
-[Grid](./grid)
+[Grid](https://github.com/chanwoo00106/css/blob/master/grid)
 
 ## position
 
@@ -16,6 +16,6 @@
 --|--
 static|기본값으로 일반적인 문서 흐름에 따라 배치합니다.
 
-[relative](./relative)
+[relative](https://github.com/chanwoo00106/css/blob/master/relative)
 
-[absolute](./absolute)
+[absolute](https://github.com/chanwoo00106/css/blob/master/absolute)
