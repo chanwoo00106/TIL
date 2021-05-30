@@ -22,4 +22,4 @@ static|기본값으로 일반적인 문서 흐름에 따라 배치합니다.
 
 ## transform
 
-(transform)[https://codepen.io/chanwoo00106/pen/gOmXLeL]
+[transform](https://codepen.io/chanwoo00106/pen/gOmXLeL)
