@@ -1,5 +1,34 @@
 # relative
 
-요소를 일반적인 문서 흐름에 따라 배치하고, 자기 자신을 기준으로 `top`, `right`, `bottom`, `left`의 값에 따라 오프셋을 적용합니다.
-오프셋은 다른 요소에는 영향을 주지 않습니다. 따라서 페이지 레이아웃에서 요소가 차지하는 공간은 `static`일 때와 같습니다.
+원래 위치에서 top, left, right, bottom으로 옮길 수 있게 한다.
 
+
+<div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+    position: static
+</div>
+
+<div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black; position: relative; left: 20px; top: 20px; border: 1px solid black;">
+    position: relative;
+    left: 20px;<br>
+    top: 20px;
+</div>
+
+<div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+    position: static
+</div>
+
+```html
+<div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+    position: static
+</div>
+
+<div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black; position: relative; left: 20px; top: 20px; border 1px solid black;">
+    position: relative;
+    left: 20px;<br>
+    top: 20px;
+</div>
+
+<div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+    position: static
+</div>
+```

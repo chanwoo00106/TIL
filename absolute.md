@@ -1,5 +1,41 @@
 # absolute
 
-일반적인 문서 흐름에서 제거하고,
-페이지 레이아웃에 공간도 배정하지 않는다.
-대신 가장 가까운 위치 지정 조상 요소에 대해 상대적으로 배치한다.
+html 태그를 기준으로 left, right, top, bottom 값에 따라 움직임
+또 absolute를 주면 더이상 누군가의 자식이 아니게 된다
+그래서 상위 태그인 초록색 박스의 크기가 줄어든걸 볼 수 있다
+
+
+<div style="background: #78e08f; width: 160px;">
+    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+        position: static
+    </div>
+    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black; position: absolute; top: 150px; left: 150px; border: 1px solid black;">
+        position: absolute
+        left: 150px;<br>
+        top: 150px;
+    </div>
+    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+        position: static
+    </div>
+</div>
+
+
+```html
+<div style="background: #78e08f; width: 160px;">
+
+    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+        position: static
+    </div>
+
+    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black; position: absolute; top: 150px; left: 150px; border: 1px solid black;">
+        position: absolute
+        left: 150px;<br>
+        top: 150px;
+    </div>
+
+    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+        position: static
+    </div>
+
+</div>
+```
