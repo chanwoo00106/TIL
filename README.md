@@ -22,9 +22,9 @@ div > .header|div 태그의 자식중 `class가` header인 `모든` 태그 선�
 
 ## display
 
-[Flexbox](https://github.com/chanwoo00106/css/blob/master/flexbox)
+[Flexbox](https://github.com/chanwoo00106/css/blob/master/flexbox.md)
 
-[Grid](https://github.com/chanwoo00106/css/blob/master/grid)
+[Grid](https://github.com/chanwoo00106/css/blob/master/grid.md)
 
 ## position
 
@@ -32,9 +32,9 @@ div > .header|div 태그의 자식중 `class가` header인 `모든` 태그 선�
 
 static : 모든 태그의 기본값
 
-[relative](https://github.com/chanwoo00106/css/blob/master/relative)
+[relative](https://github.com/chanwoo00106/css/blob/master/relative.md)
 
-[absolute](https://github.com/chanwoo00106/css/blob/master/absolute)
+[absolute](https://github.com/chanwoo00106/css/blob/master/absolute.md)
 
 ## transform
 
