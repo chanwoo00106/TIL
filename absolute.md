@@ -5,35 +5,23 @@ html 태그를 기준으로 left, right, top, bottom 값에 따라 움직임
 그래서 상위 태그인 초록색 박스의 크기가 줄어든걸 볼 수 있다
 
 
-<div style="background: #78e08f; width: 160px;">
-    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
-        position: static
-    </div>
-    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black; position: absolute; top: 150px; left: 150px; border: 1px solid black;">
-        position: absolute
-        left: 150px;<br>
-        top: 150px;
-    </div>
-    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
-        position: static
-    </div>
-</div>
+![absolute](./images/absolute.png)
 
 
 ```html
-<div style="background: #78e08f; width: 160px;">
+<div style="background: #78e08f; width: 190px;">
 
-    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+    <div style="background: #81ecec; width: 150px; height: 150px; margin: 20px; color: black;">
         position: static
     </div>
 
-    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black; position: absolute; top: 150px; left: 150px; border: 1px solid black;">
+    <div style="background: #81ecec; width: 150px; height: 150px; margin: 20px; color: black; position: absolute; top: 150px; left: 150px; border: 1px solid black;">
         position: absolute
         left: 150px;<br>
         top: 150px;
     </div>
 
-    <div style="background: #81ecec; width: 120px; height: 120px; margin: 20px; color: black;">
+    <div style="background: #81ecec; width: 150px; height: 150px; margin: 20px; color: black;">
         position: static
     </div>
 
