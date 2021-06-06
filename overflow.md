@@ -2,6 +2,8 @@
 
 컨텐츠가 너무 커서 요소내에 모두 보여주기 힘들때 그것을 어떻게 보여줄지를 지정한다
 
+**주의* : width나 height를 지정하지 않으면 작동하지 않음
+
 ![overflow](images/overflow.png)
 
 ```html
