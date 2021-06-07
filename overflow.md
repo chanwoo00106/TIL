@@ -35,7 +35,7 @@ overflow의 기본으로 위의 예시와 같다
 
 ## hidden
 
-콘텐츠를 안쪽 여백 상자에 맞추기 위해 잘라낸다. 스크롤바를 제공하지 않는다
+콘텐츠를 안쪽 여백 상자에 맞춰서 잘라낸다. 스크롤바를 제공하지 않는다
 
 ![overflow-hidden](images/overflow-hidden.png)
 
