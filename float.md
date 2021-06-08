@@ -20,3 +20,5 @@ right|자신을 포함하고 있는 박스의 오른에 떠 있게 함
     float: right;
 </h1>
 ```
+
+[더 자세한 내용](https://nuhends.tistory.com/14)
