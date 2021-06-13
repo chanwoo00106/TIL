@@ -36,6 +36,12 @@ static : 모든 태그의 기본값
 
 [absolute](absolute.md)
 
+---
+
 ## [transform](transform.md)
 
 ## [overflow](overflow.md)
+
+## [background-repeat](background-repeat.md)
+
+## [visibility](visibility.md)
