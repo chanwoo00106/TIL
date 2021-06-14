@@ -45,3 +45,9 @@ static : 모든 태그의 기본값
 ## [background-repeat](background-repeat.md)
 
 ## [visibility](visibility.md)
+
+## opacity
+
+자식까지 투명하게 만드는 것
+
+0.0(투명) ~ 1.0(불투명)
