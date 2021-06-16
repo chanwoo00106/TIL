@@ -36,7 +36,7 @@ static : 모든 태그의 기본값
 
 [absolute](absolute.md)
 
----
+<br>
 
 ## [transform](transform.md)
 
