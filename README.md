@@ -22,9 +22,9 @@ div > .header|div 태그의 자식중 `class가` header인 `모든` 태그 선�
 
 ## display
 
-[Flexbox](flexbox.md)
+- [Flexbox](flexbox.md)
 
-[Grid](grid.md)
+- [Grid](grid.md)
 
 ## position
 
@@ -32,17 +32,15 @@ div > .header|div 태그의 자식중 `class가` header인 `모든` 태그 선�
 
 static : 모든 태그의 기본값
 
-[relative](relative.md)
+- [relative](relative.md)
 
-[absolute](absolute.md)
+- [absolute](absolute.md)
 
 <br>
 
 ## [transform](transform.md)
 
 ## [overflow](overflow.md)
-
-## [background-repeat](background-repeat.md)
 
 ## [visibility](visibility.md)
 
@@ -51,3 +49,7 @@ static : 모든 태그의 기본값
 자식까지 투명하게 만드는 것
 
 0.0(투명) ~ 1.0(불투명)
+
+## background
+
+- [background-repeat](background-repeat.md)
