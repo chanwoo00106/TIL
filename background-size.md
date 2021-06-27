@@ -25,7 +25,6 @@
 ![background-size-contain](images/background-size-contain.png)
 
 ## 나머진 나도 몰라
----
 initial : 기본값으로 설정합니다.<br>
 inherit : 부모 요소의 속성값을 상속받습니다.
 
