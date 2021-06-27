@@ -54,3 +54,4 @@ static : 모든 태그의 기본값
 
 - [background-repeat](background-repeat.md)
 - [background-position](background-position.md)
+- [background-size](background-size.md)
