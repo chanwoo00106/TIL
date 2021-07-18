@@ -5,19 +5,19 @@
 자식 태그 : 그 부모 태그 `바로 아래 태그들만`을 가리킴<br>
 자손 태그 : 그 부모 태그 아래의 `모든 태그들`을 가리킴
 
-대충 `>`가 있으면 자식 태그 선택자 이다
+대충 `>`가 있으면 자식 태그 선택자이다
 
 css|설명
 --|--
-*|모든 엘리먼트선택
+*|모든 엘리먼트 선택
 #heaer|`id`가 header인 엘리먼트 선택(id가 header인 태그는 단 하나만 존재할 수 있음)
 div|태그 이름이 div인 `모든` 엘리먼트 선택
 .header|`class`가 header인 `모든` 엘리먼트 선택
-div div|div 태그의 자식중 `태그 이름`이 div인 `모든` 엘리먼트 선택
-div.header|태그 이름이 div 이면서 `class`가 header인 `모든` 엘리먼트 선택
-div .header|태그 이름이 div 인 태그의 자식중 `class`가 header인 `모든` 엘리먼트 선택
-div > div|div 태그의 자식중 `태그 이름`이 div인 `모든` 태그 선택
-div > .header|div 태그의 자식중 `class가` header인 `모든` 태그 선택
+div div|div 태그의 자식 중 `태그 이름`이 div인 `모든` 엘리먼트 선택
+div.header|태그 이름이 div이면서 `class`가 header인 `모든` 엘리먼트 선택
+div .header|태그 이름이 div인 태그의 자식 중 `class`가 header인 `모든` 엘리먼트 선택
+div > div|div 태그의 자식 중 `태그 이름`이 div인 `모든` 태그 선택
+div > .header|div 태그의 자식 중 `class가` header인 `모든` 태그 선택
 
 
 ## display
