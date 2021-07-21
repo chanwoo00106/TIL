@@ -18,6 +18,10 @@ div.header|태그 이름이 div이면서 `class`가 header인 `모든` 엘리먼
 div .header|태그 이름이 div인 태그의 자식 중 `class`가 header인 `모든` 엘리먼트 선택
 div > div|div 태그의 자식 중 `태그 이름`이 div인 `모든` 태그 선택
 div > .header|div 태그의 자식 중 `class가` header인 `모든` 태그 선택
+h1 + p|같은 레벨에 태그 중 `첫번째`를 선택
+h1 ~ p|같은 레벨에 태그 `전부`를 선택
+a[href]|a 태그중 href 가 있는 모든 태그 선택
+a[target = _blank]|a태그중 target이 "_blank"인 모든 태그 선택  
 
 
 ## display
@@ -56,3 +60,5 @@ static : 모든 태그의 기본값
 - [background-position](background-position.md)
 - [background-size](background-size.md)
 - [linear-gradient](linear-gradient.md)
+
+
