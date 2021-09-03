@@ -5,7 +5,7 @@
 ## 1. http란?
 ---
 HTTP(Hyper Text Transfer Protocol)란 서버/클라이언트 모델을 따라 데이터를 주고 받기 위한 프로토콜이다.<br>
-즉 HTTP는 인터넷에서 [하이퍼텍스트](./하이퍼텍스트.md)를 교환하기 위한 통신 규약이다
+즉 HTTP는 인터넷에서 [하이퍼텍스트](./잡것들.md#hypertext)를 교환하기 위한 통신 규약이다
 
 ### http의 구조
 - HTTP 기본적으로 요청/응답 (request/response) 구조로 되어있다.<br>
@@ -43,7 +43,7 @@ HTTPS는 HTTP와 다르게 443번 포트를 사용하며, 네트워크 상에서
 
 ### 동작 과정
 
-1. Handshaking
+1. [Handshaking](잡것들.md#Handshaking)
     1. Client Hello<br>
         클라가 서버에 접속하는데 이때<br>
         클라이언트 측에서 생성한 `랜덤 데이터`<br>
@@ -55,7 +55,7 @@ HTTPS는 HTTP와 다르게 443번 포트를 사용하며, 네트워크 상에서
         서버가 클라의 요청에 대한 응답을 보내는데 이때<br>
         서버 측에서 생성한 `랜덤 데이터`<br>
         서버가 선택한 클라이언트의 `암호화 방식`<br>
-        [SSL 인증서]()<br>
+        [SSL 인증서](잡것들.md#SSL-인증서)<br>
         등을 클라에게 보냄
 
     3. Client 인증 확인<br>
@@ -81,3 +81,8 @@ HTTPS는 HTTP와 다르게 443번 포트를 사용하며, 네트워크 상에서
 이미지로 정리!!
 
 ![ssl](img/ssl.png)
+
+## 참고 사이트
+
+[https 동작 과정](https://velog.io/@averycode/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-HTTP%EC%99%80-HTTPS-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95#%F0%9F%A7%9A%E2%99%80%EF%B8%8F-httpsssl%EC%9D%98-%EB%8F%99%EC%9E%91%EA%B3%BC%EC%A0%95)
+[http와 https](https://mangkyu.tistory.com/98)
