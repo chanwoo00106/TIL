@@ -5,3 +5,9 @@
 2. [TCP, UDP 차이](TCP&UDP.md)
 
 3. [springboot 란?](springboot.md)
+
+4. [IOC란?](IOC.md)
+
+5. [OOP란?](OOP.md)
+
+6. [RestAPI](restAPI.md)
