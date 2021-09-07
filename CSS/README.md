@@ -61,4 +61,11 @@ static : 모든 태그의 기본값
 - [background-size](background-size.md)
 - [linear-gradient](linear-gradient.md)
 
+## text-align
 
+값|설명
+---|---
+left|왼쪽 정렬
+right|오른쪽 정렬
+center|가운데 정렬
+jutify|양쪽 정렬
