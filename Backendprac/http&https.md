@@ -54,6 +54,9 @@ HTTP(Hyper Text Transfer Protocol)란 서버/클라이언트 모델을 따라 �
         토큰 기반의 인증이 좋다고는 할 수 없다.<br>
         서비스에 따라 기술의 특징을 잘 이해하여 때에 따라 쿠키, 세션, OAuth, JWT 등을 적절히 사용하는 것이 좋다.
 
+        [JWT 소개 및 구조](https://velopert.com/2389)
+        [JWT 사용방법](https://helloinyong.tistory.com/111)
+
 [http에 대한 더 자세한 내용](https://velog.io/@teddybearjung/HTTP-%EA%B5%AC%EC%A1%B0-%EB%B0%8F-%ED%95%B5%EC%8B%AC-%EC%9A%94%EC%86%8C)
 
 ## 2. HTTPS란?
