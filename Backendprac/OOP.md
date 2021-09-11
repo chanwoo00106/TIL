@@ -20,3 +20,35 @@ OOP는 객체 지향 프로그래밍(영어: Object-Oriented Programming)의 약
     이게 진짜 중요한데
     - 상속이란 기존 상위클래스에 근거하여 새롭게 클래스와 행위를 정의할 수 있게 도와주는 개념이다.
     - 기존 클래스에 기능을 가져와 재사용할 수 있으면서도 동시에 새롭게 만든 클래스에 새로운 기능을 추가할 수 있게 만들어 준다.
+
+
+```java
+public class Parents {
+    private String name = "chan woo";
+    private int age = 17;
+
+    public void print() {
+        System.out.printf("my name is %s.\nI'm %d years old.\n", name, age);
+    }
+}
+
+public class Child extends Parents {
+    String Location;
+    public Child(String Location) {
+        this.Location = Location;
+    }
+
+    public void showMessage() {
+        print();
+        System.out.printf("I live in %s.", this.Location);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Child C = new Child("강진");
+        C.showMessage();
+    }
+}
+
+```
