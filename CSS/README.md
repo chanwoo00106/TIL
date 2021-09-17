@@ -10,7 +10,7 @@
 css|설명
 --|--
 *|모든 엘리먼트 선택
-#heaer|`id`가 header인 엘리먼트 선택(id가 header인 태그는 단 하나만 존재할 수 있음)
+#header|`id`가 header인 엘리먼트 선택(id가 header인 태그는 단 하나만 존재할 수 있음)
 div|태그 이름이 div인 `모든` 엘리먼트 선택
 .header|`class`가 header인 `모든` 엘리먼트 선택
 div div|div 태그의 자식 중 `태그 이름`이 div인 `모든` 엘리먼트 선택
