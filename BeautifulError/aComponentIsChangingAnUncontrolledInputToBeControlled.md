@@ -2,8 +2,8 @@
 
 ![aComponentIsChangingAnUncontrolledInputToBeControlled](./img/aComponentIsChangingAnUncontrolledInputToBeControlled.png)
 
-어느날 useSate를 사용하다 발생한 에러 인데 `input`태그에서 값을 받는데<br>
-값이 바뀔 때(onChange)가 아닌 엔터를 입력 할 때(onSubmit) 값을 받도록 만들었다.
+어느 날 useSate를 사용하다 발생한 에러인데 `input`태그에서 값을 받는데<br>
+값이 바뀔 때(onChange)가 아닌 엔터를 입력할 때(onSubmit) 값을 받도록 만들었다.
 
 ![onSubmitExample](./img/onSubmitExample.png)
 
@@ -29,4 +29,4 @@ const [input, setInput] = useState("");
 
 하지만 에러가 바뀌었다...
 
-[YouProvidedA](./YouProvidedA.md)
+[다음 에러를 해결하러 가기](./YouProvidedA.md)

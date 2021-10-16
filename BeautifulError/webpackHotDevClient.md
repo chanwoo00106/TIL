@@ -6,7 +6,7 @@
 > This can lead to unexpected behavior when compiling on a filesystem with other case-semantic.<br>
 > Use equal casing. Compare these module identifiers
 
-어느날 이런 에러가 떴는데 이게 styled-components라는 모듈을 import하면 생기는 에러였다.<br>
+어느 날 이런 에러가 떴는데 이게 styled-components라는 모듈을 import하면 생기는 에러였다.<br>
 
 하지만 번역을 해보면 
 
