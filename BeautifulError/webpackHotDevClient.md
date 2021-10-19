@@ -23,3 +23,13 @@ D:\GitHub\react\youtube\node_modules\styled-components\dist\styled-components.br
 여길 자세히 보면 위에 경로는 `D:\GitHub\React`라고 하는데<br>
 아래에서는 `D:\GitHub\react\`라고 하면서 react에 대소문자가 바뀌어있었다.<br>
 그래서 `React`라는 폴더 이름을 `react`로 바꿔주었더니 에러가 사라졌다.
+
+나중에 알고보니 너무 사소한 실수 였다.<br>
+터미널로 폴더를 왔다 갔다 할 때 폴더 이름이 소문자이건 대문자 이건 상관없이<br>
+다닐 수 있는데 문제는 module들은 `D:\GitHub\React`로 찾고 있는데<br>
+나는 `D:\GitHub\react`로 들어가고 있어서 오류가 나고 있었다
+
+![img](./img/pathIMG.png)
+![img](./img/pathIMG2.png)
+
+앞으로는 터미널에서 폴더명을 칠 때 tab을 꼭 눌러주자
