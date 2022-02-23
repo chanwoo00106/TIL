@@ -123,3 +123,83 @@ fn main() {
 Slice is 6 bytes and also 6 characters.
 Slice2 is 7 bytes but only 3 characters.
 ```
+
+## Type inference(타입 추론)
+
+변수를 타입없이 안에 숫자를 넣고 선언하면 기본적으로 `u32`타입을 갖게 된다.<br />
+하지만 이게 싫다면 직접 타입을 적어줘야 한다.
+
+타입을 명시하는 방법은 3가지(?) 정도 있는 것 같은데
+
+첫 번째로는 변수명 옆에 `:`을 붙여서 작성하는 거랑
+
+```rs
+fn main() {
+    let small_number: u8 = 10;
+}
+```
+
+두 번째로는 숫자 뒤에 같이 적는 방법이랑
+
+```rs
+fn main() {
+    let small_number = 10u8;
+}
+```
+
+세 번째로는 숫자랑 문자 사이에 `_`를 붙여주는 방법이다.
+
+```rs
+fn main() {
+    let small_number = 10_u8;
+}
+```
+
+그런데 여기서 `_`는 숫자를 보기 편하게 하려고 적는 것이여서 많이 적어도 상관 없다.
+
+```rs
+fn main() {
+    let number = 10_________________________u8;
+    let number2 = 1___6______2____4______i32;
+    println!("{} {}", number, number2); // 10 1624
+}
+```
+
+### floats
+
+`Floats`는 소수점이 있는 숫자를 말하는데 예를 들어 `0.5`, `5.0` 같은 것들을 말한다.
+
+글고 코드에서는 `5.0` 같은 것들은 `5.`이라 적어도 된다.
+
+```rs
+fn main() {
+    let my_float = 5.;
+}
+```
+
+만약 타입을 명시하지 않았다면 Rust는 변수 타입을 기본적으로 `f64`로 선언하게 됩니다.<br />
+Rust에는 `f32`랑 `f64`밖에 없어서 둘 중 하나만 고르면 된다.
+
+여기서 `f32`랑 `f64`는 서로 연산이 불가능하다
+그래서 둘 중 하나의 타입을 맞춰줘야 한다
+
+```rs
+fn main() {
+    let my_float: f64 = 5.0;
+    let my_other_float: f32 = 8.5;
+
+    let third_float = my_float + my_other_float as f64;
+}
+```
+
+하지만 Rust는 똑똑해서 타입을 선언하는 부분을 쓰지 않으면 f32가 필요한 경우에는 f32를 선택한다.
+
+```rs
+fn main() {
+    let my_float: f32 = 5.0;
+    let my_other_float = 8.5; // Rust는 보통 f64 선택함,
+
+    // 여기서는 f32가 필요하기 때문에 f32를 선택함
+    let third_float = my_float + my_other_float;
+}
+```
