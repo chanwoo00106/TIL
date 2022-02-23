@@ -203,3 +203,127 @@ fn main() {
     let third_float = my_float + my_other_float;
 }
 ```
+
+## Printing 'hello, world!'
+
+코드 분석을 좀 하자면 아래와 같은 코드가 있다고 할 때
+
+```rs
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+- `fn`은 함수(function)을 의미하고
+- `main`은 프로그램을 시작했을 때 처음 실행되는 함수이다.
+- `()`는 함수에게 넘겨줄 매개변수를 여기에 적어준다.
+- `{}`는 코드블럭으로 여기 안에 코드를 작성한다.
+
+마지막으로 코드의 마무리는 `;`으로 끝나야 한다.
+
+`println!()`은 말 그대로 출력하는 건데 대충 변수를 섞어서 출력하는 방법은 아래와 같은 방법들이 있다.
+
+```rs
+fn main() {
+    println!("{} is Best", "Teemo")
+    println!("{name} is Best", name="Teemo")
+}
+```
+
+함수를 만들고 선언하는 방법도 아래와 같다
+
+```rs
+fn number() -> i32 {
+    8
+}
+
+fn main() {
+    // Hello, world number 8!
+    println!("Hello, world number {}!", number());
+}
+```
+
+`fn number()`로 해서 `number`라는 함수를 선언하고 -> 다음에 `return`타입을 적어주면 된다.
+
+그런데 `number`함수에서 `return`을 하지 않는데 이건 함수 마지막에 `;`을 붙이지 않으면 자동으로 `return`이 된다. 대신 `return`을 적어주면 꼭 `;`을 붙여야 한다.
+
+그러므로 아래 두 함수는 같은 함수다
+
+```rs
+fn number() -> i32 {
+    8
+}
+//------------------------
+fn number() -> i32 {
+    return 8;
+}
+```
+
+함수에서 매개변수를 받는 법은 아래와 같다
+
+```rs
+fn multiply(number_one: i32, number_two: i32) {
+    let result = number_one * number_two;
+    println!("{} times {} is {}", number_one, number_two, result);
+}
+
+fn main() {
+    multiply(8, 9);
+    let some_number = 10;
+    let some_other_number = 2;
+    multiply(some_number, some_other_number);
+}
+```
+
+`()`사이에 매개변수 명이랑 타입을 적고 `,`으로 구분한다.<br />
+함수를 사용할 때는 함수명을 적고 `()`사이에 매개변수를 적으면 된다
+
+### Declaring variables and code blocks
+
+이게 스코프를 말하는 것 같은데 아래와 같은 예제가 있을 때 오류가 나는데<br />
+이유는 코드 블럭 안에서 선언된 변수를 바깥에서 찾으려 해서 나는 오류이다
+
+```rs
+fn main() {
+    {
+        let my_number = 8; // my_number starts here
+                           // my_number ends here!
+    }
+
+    println!("Hello, number {}", my_number); // ⚠️ there is no my_number and
+                                             // println!() can't find it
+}
+```
+
+Rust에서는 코드 블럭을 `return` 변수로 사용할 수 있다고 한다
+
+```rs
+fn main() {
+    let my_number = {
+        let second_number = 8;
+        second_number + 9 // No semicolon, so the code block returns 8 + 9.
+                          // It works just like a function
+    };
+
+    println!("My number is: {}", my_number);
+}
+```
+
+위와 같이 `second_number`를 코드블럭 안에서 return 하면 그 값은 `my_number`로 가게 된다.
+
+만약 여기서 `second_number + 9` 부분에 세미콜론을 추가하면 이 코드 블럭은 `()`를 반환하게 되는데 이걸 출력하려면 `{:?}`을 사용해야 한다고 한다
+
+```rs
+fn main() {
+    let my_number = {
+    let second_number = 8; // declare second_number,
+        second_number + 9; // add 9 to second_number
+                           // but we didn't return it!
+                           // second_number dies now
+    };
+
+    println!("My number is: {:?}", my_number); // my_number is ()
+}
+```
+
+`{:?}` 이걸 사용해야 하는 이유는 다음 챕터에서
