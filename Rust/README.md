@@ -508,3 +508,41 @@ fn main() {
     println!("The number is now: {}", final_number)
 }
 ```
+
+## The stack, the heap, and pointers
+
+stack, heap 그리고 pointer는 Rust에서 가장 중요하다
+
+일단 stack과 heap의 차이점을 정리해 보자면
+
+- stack은 매우 빠르지만 heap은 그렇지 않다
+- Rust는 컴파일 타임에 타입의 크기를 알고 있어야 한다. 그래서 `i32`는 4바이트이기 때문에 stack에 저장이 된다.
+- 하지만 몇몇 타입들은 컴파일 타임에 크기를 알지 못할 때가 있다. 하지만 stack은 정확한 크기를 필요로 한다 그래서 데이터는 heap에 두고 stack에서는 그 데이터를 pointer로 가리키면 된다
+
+Pointer는 책을 생각하면 쉽게 이해할 수 있다. 만약 어떤 챕터의 위치를 알고 싶을 때 차례에 가서 몇 페이지인지 보고 찾고 싶었던 챕터를 쉽게 찾을 수 있을 텐데 여기서 챕터를 데이터라고 하고 쪽수를 pointer라고 생각하면 된다
+
+보통 Rust에서는 pointer를 **reference**라고 부른다. 매우 중요한 부분인데 reference는 다른 변수의 메모리를 가리킵니다. reference의 의미는 값을 _빌리는_ 것을 의미한다. 하지만 그 값을 갖지는 않는다. 이것은 방금 설명 했던 책과 같은 의미이다. 그리고 Rust에서는 앞에 `&`를 붙여서 메모리를 가리킨다.
+
+```rs
+fn main() {
+    let my_variable = 8; // makes a regular variable, but
+    let my_reference = &my_variable; // makes a reference.
+}
+```
+
+여기서 `my_reference = &my_variable`부분은 "`my_reference`는 `my_variable`을 참조한다" 라고 읽으면 된다.
+
+저 코드의 의미는 `my_reference`는 오직 `my_variable`의 데이터만 보게 된다. `my_variable`는 여전히 data를 가지고 있다.
+
+마지막으로 reference를 또 reference 할 수 있는데 아래 예제를 보면
+
+```rs
+fn main() {
+    let my_number = 15; // This is an i32
+    let single_reference = &my_number; //  This is a &i32
+    let double_reference = &single_reference; // This is a &&i32
+    let five_references = &&&&&my_number; // This is a &&&&&i32
+}
+```
+
+`my_number`를 reference한 `single_reference`, `single_reference`를 또 reference한 `double_reference`, 심지어는 `my_number`를 5번 reference한 `five_references`도 있다. 결국 다 출력해보면 다 15를 가리키고 있다.
