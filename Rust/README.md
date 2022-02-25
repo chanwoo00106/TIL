@@ -327,3 +327,81 @@ fn main() {
 ```
 
 `{:?}` 이걸 사용해야 하는 이유는 다음 챕터에서
+
+## Display and debug
+
+간단한 변수들은 `{}`안에 넣어서 쉽게 출력이 되지만 가끔 그렇지 않은 것들도 있다<br>
+그럴때는 `debug print`라는 걸 사용하면 된다. 이걸 사용하면 많은 정보를 알 수 있지만 그만큼 예쁘게 보이지는 않는다
+
+`debug print`를 언제 사용할지는 compiler가 알려줄 것이다. 예를 들어
+
+```ts
+fn main() {
+    let doesnt_print = ();
+    println!("This will not print: {}", doesnt_print); // ⚠️
+}
+```
+
+실행시키면 아래와 같은 결과가 나온다
+
+```
+error[E0277]: `()` doesn't implement `std::fmt::Display`
+ --> src\main.rs:3:41
+  |
+3 |     println!("This will not print: {}", doesnt_print);
+  |                                         ^^^^^^^^^^^^ `()` cannot be formatted with the default formatter
+  |
+  = help: the trait `std::fmt::Display` is not implemented for `()`
+  = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+  = note: required by `std::fmt::Display::fmt`
+  = note: this error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+```
+
+중요한 부분은 `you may be able to use {:?} (or {:#?} for pretty-print) instead` 이 부분인데 이 문장의 의미는 `{:?}` 또는 `{:#?}`로 시도해 보라는 의미이다. 그리고 `{:#?}`는 `pretty-print`라고 부른단다. `pretty-print`는 `{:?}`와 비슷한 것 같지만 더 많은 줄로 그나마 예쁘게 보여준다.
+
+따라서 Display는 `{}`로 출력 하는 걸 말하고 Debug는 `{:?}`로 출력하는 걸 말한다.
+
+하나 더: `print!`도 사용 할 수 있다고 한다.
+
+```rs
+fn main() {
+    print!("This will not print a new line");
+    println!(" so this will be on the same line");
+}
+// 결과
+//This will not print a new line so this will be on the same line
+```
+
+### Smallest and largest numbers
+
+만약 한 타입에 최대값과 최소값을 보고싶다면 타입 다음에 콜론 두 개를 찍고 MIN과 MAX를 쓰면 된다.
+
+```rs
+fn main() {
+    println!("The smallest i8 is {} and the biggest i8 is {}.", i8::MIN, i8::MAX); // hint: printing std::i8::MIN means "print MIN inside of the i8 section in the standard library"
+    println!("The smallest u8 is {} and the biggest u8 is {}.", u8::MIN, u8::MAX);
+    println!("The smallest i16 is {} and the biggest i16 is {}.", i16::MIN, i16::MAX);
+    println!("The smallest u16 is {} and the biggest u16 is {}.", u16::MIN, u16::MAX);
+    println!("The smallest i32 is {} and the biggest i32 is {}.", i32::MIN, i32::MAX);
+    println!("The smallest u32 is {} and the biggest u32 is {}.", u32::MIN, u32::MAX);
+    println!("The smallest i64 is {} and the biggest i64 is {}.", i64::MIN, i64::MAX);
+    println!("The smallest u64 is {} and the biggest u64 is {}.", u64::MIN, u64::MAX);
+    println!("The smallest i128 is {} and the biggest i128 is {}.", i128::MIN, i128::MAX);
+    println!("The smallest u128 is {} and the biggest u128 is {}.", u128::MIN, u128::MAX);
+}
+```
+
+결과
+
+```
+The smallest i8 is -128 and the biggest i8 is 127.
+The smallest u8 is 0 and the biggest u8 is 255.
+The smallest i16 is -32768 and the biggest i16 is 32767.
+The smallest u16 is 0 and the biggest u16 is 65535.
+The smallest i32 is -2147483648 and the biggest i32 is 2147483647.
+The smallest u32 is 0 and the biggest u32 is 4294967295.
+The smallest i64 is -9223372036854775808 and the biggest i64 is 9223372036854775807.
+The smallest u64 is 0 and the biggest u64 is 18446744073709551615.
+The smallest i128 is -170141183460469231731687303715884105728 and the biggest i128 is 170141183460469231731687303715884105727.
+The smallest u128 is 0 and the biggest u128 is 340282366920938463463374607431768211455.
+```
