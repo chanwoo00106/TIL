@@ -19,7 +19,7 @@ fn main() {
 
 Rust는 많은 타입을 가지고 있는데 숫자, 문자 등이 있는데 일부는 간단하고 일부는 복잡하기도 하며 직접 만들 수 있기도 하다.
 
-### Primitive Type(원시 타입?)
+## Primitive Type(원시 타입?)
 
 Rust에서 가장 쉬운 타입으로 가장 기본적인 것들이다. 우선 `Integers`는 소수점을 가지지 않는 모든 숫자를 말하는데 거기서 아래와 같이 두 가지 종류로 나뉜다
 
@@ -165,7 +165,7 @@ fn main() {
 }
 ```
 
-### floats
+## floats
 
 `Floats`는 소수점이 있는 숫자를 말하는데 예를 들어 `0.5`, `5.0` 같은 것들을 말한다.
 
@@ -278,7 +278,7 @@ fn main() {
 `()`사이에 매개변수 명이랑 타입을 적고 `,`으로 구분한다.<br />
 함수를 사용할 때는 함수명을 적고 `()`사이에 매개변수를 적으면 된다
 
-### Declaring variables and code blocks
+## Declaring variables and code blocks
 
 이게 스코프를 말하는 것 같은데 아래와 같은 예제가 있을 때 오류가 나는데<br />
 이유는 코드 블럭 안에서 선언된 변수를 바깥에서 찾으려 해서 나는 오류이다
@@ -372,7 +372,7 @@ fn main() {
 //This will not print a new line so this will be on the same line
 ```
 
-### Smallest and largest numbers
+## Smallest and largest numbers
 
 만약 한 타입에 최대값과 최소값을 보고싶다면 타입 다음에 콜론 두 개를 찍고 MIN과 MAX를 쓰면 된다.
 
@@ -404,4 +404,107 @@ The smallest i64 is -9223372036854775808 and the biggest i64 is 9223372036854775
 The smallest u64 is 0 and the biggest u64 is 18446744073709551615.
 The smallest i128 is -170141183460469231731687303715884105728 and the biggest i128 is 170141183460469231731687303715884105727.
 The smallest u128 is 0 and the biggest u128 is 340282366920938463463374607431768211455.
+```
+
+## Mutability (changing)
+
+`let`으로 변수를 선언하면 그 변수는 상수(절대 바뀌지 않는 값)가 된다
+
+```rs
+fn main() {
+    let my_number = 8;
+    my_number = 10; // ⚠️
+}
+// 결과
+// error[E0384]: cannot assign twice to immutable variable my_number
+```
+
+만약 상수가 아닌 변수를 만들고 싶다면 `let` 다음에 `mut`를 적어주면 된다.
+
+```rs
+fn main() {
+    let mut my_number = 8;
+    my_number = 10;
+}
+```
+
+하지만 변수의 타입까지는 바꿀 수 없다
+
+```rs
+fn main() {
+    let mut my_variable = 8; // it is now an i32. That can't be changed
+    my_variable = "Hello, world!"; // ⚠️
+}
+```
+
+## shadowing
+
+```rs
+fn main() {
+    let my_number = 8; // This is an i32
+    println!("{}", my_number); // prints 8
+    let my_number = 9.2; // This is an f64 with the same name. But it's not the first my_number - it is completely different!
+    println!("{}", my_number) // Prints 9.2
+}
+```
+
+위 예제를 보면 `my_number`가 두 번 선언 된 것을 볼 수 있는데 이걸 보고 `my_number`가 "shadowed" 됐다고 하는 것이다.
+
+처음 선언 됐던 `my_number`는 다음에 선언되는 `my_number`와 같은 코드 블럭에 감싸져 있기 때문에 처음 선언 됐던 `my_number`는 사라지게 된다.
+
+하지만 다른 코드 블럭에 감짜져 있다면 두 변수 모두 볼 수 있다
+
+```rs
+fn main() {
+    let my_number = 8; // This is an i32
+    println!("{}", my_number); // prints 8
+    {
+        let my_number = 9.2; // This is an f64. It is not my_number - it is completely different!
+        println!("{}", my_number) // Prints 9.2
+                                  // But the shadowed my_number only lives until here.
+                                  // The first my_number is still alive!
+    }
+    println!("{}", my_number); // prints 8
+}
+```
+
+#### 그럼 shadowing의 유리한 점은 무엇일까?
+
+shadowing은 변수의 변경이 많을 때 좋다. 만약 변수를 가지고 간단한 연산을 많이 한다고 해본다면
+
+```rs
+fn times_two(number: i32) -> i32 {
+    number * 2
+}
+
+fn main() {
+    let final_number = {
+        let y = 10;
+        let x = 9; // x starts at 9
+        let x = times_two(x); // shadow with new x: 18
+        let x = x + y; // shadow with new x: 28
+        x // return x: final_number is now the value of x
+    };
+    println!("The number is now: {}", final_number)
+}
+```
+
+하지만 shadowing이 없다면 계속해서 새로운 변수를 만들어야 한다. 아래 예제와 같이
+
+```rs
+fn times_two(number: i32) -> i32 {
+    number * 2
+}
+
+fn main() {
+    // Pretending we are using Rust without shadowing
+    let final_number = {
+        let y = 10;
+        let x = 9; // x starts at 9
+        let x_twice = times_two(x); // second name for x
+        let x_twice_and_y = x_twice + y; // third name for x!
+        x_twice_and_y // too bad we didn't have shadowing - we could have just used x
+    };
+    println!("The number is now: {}", final_number)
+}
 ```
