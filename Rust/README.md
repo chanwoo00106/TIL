@@ -546,3 +546,239 @@ fn main() {
 ```
 
 `my_number`를 reference한 `single_reference`, `single_reference`를 또 reference한 `double_reference`, 심지어는 `my_number`를 5번 reference한 `five_references`도 있다. 결국 다 출력해보면 다 15를 가리키고 있다.
+
+## More about printing
+
+Rust에서는 거의 모든걸 출력할 수 있다<br />
+이번 챕터에서는 출력할 때 알아야할 추가 사항을 설명할 것이다.
+
+만약 출력을 할 때 엔터나 탭을 출력하려면 아래와 같이 `\n`과 `\t`를 적어주면 된다.
+
+```rs
+fn main() {
+    // Note: this is print!, not println!
+    print!("\t Start with a tab\nand move to a new line");
+}
+```
+
+출력 결과:
+
+```
+    Start with a tab
+and move to a new line
+```
+
+하지만 `""`안에 진짜 엔터나 탭을 해도 문제 없다.
+
+```rs
+fn main() {
+    println!("Hello,
+worl    d!");
+}
+// 출력 결과
+//Hello,
+//worl    d!
+```
+
+만약 `\n`이나 `\t`그리고 `\`를 출력하고 싶다면 `\\n` 나 `\\t` 그리고 `\\`로 해서 출력할 수 있다
+
+```rs
+fn main() {
+    println!("Here are two escape characters: \\n and \\t");
+}
+
+// 출력 결과
+// Here are two escape characters: \n and \t
+```
+
+만약 역슬래쉬 같은게 문장에 너무 많은데 그걸 전부 무시하고 싶다면 `""` 시작 부분에 `r#` 그리고 끝 부분에 `#`을 적어주면 된다.
+
+```rs
+fn main() {
+    println!("He said, \"You can find the file at c:\\files\\my_documents\\file.txt.\" Then I found the file."); // We used \ five times here
+    println!(r#"He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file."#)
+}
+```
+
+출력 결과
+
+```
+He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file.
+He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file.
+```
+
+이건 뭔 소린지 모르겠는데 `#`을 여러개 적을 수 있다고 한다
+
+```rs
+fn main() {
+
+    let my_string = "'Ice to see you,' he said."; // single quotes
+    let quote_string = r#""Ice to see you," he said."#; // double quotes
+    let hashtag_string = r##"The hashtag #IceToSeeYou had become very popular."##; // Has one # so we need at least ##
+    let many_hashtags = r####""You don't have to type ### to use a hashtag. You can just use #.""####; // Has three ### so we need at least ####
+
+    println!("{}\n{}\n{}\n{}\n", my_string, quote_string, hashtag_string, many_hashtags);
+
+}
+```
+
+변수 명을 `let`, `fn`같은 예약어로 하고 싶다면 변수명 앞에 `r#`을 적으면 된다.
+
+```rs
+fn main() {
+    let r#let = 6; // The variable's name is let
+    let mut r#mut = 10; // This variable's name is mut
+}
+```
+
+추가로 함수명도 `r#`을 붙여 예약어로 사용이 가능하다.
+
+```rs
+fn r#return() -> u8 {
+    println!("Here is your number.");
+    8
+}
+
+fn main() {
+    let my_number = r#return();
+    println!("{}", my_number);
+}
+```
+
+만약 문자열을 ASCII 코드로 변환하고 싶다면 문자열 맨 앞에 `b`를 붙여주고 출력할 때 debug print를 사용하면 된다
+
+```ts
+fn main() {
+    println!("{:?}", b"This will look like numbers");
+}
+
+//[84, 104, 105, 115, 32, 119, 105, 108, 108, 32, 108, 111, 111, 107, 32, 108, 105, 107, 101, 32, 110, 117, 109, 98, 101, 114, 115]
+```
+
+Unicode 를 얻는 방법은 한 글자를 `u32`타입으로 해서 `{:X}`에 넣어 출력해주면 된다.
+
+```rs
+fn main() {
+    println!("{:X}", '행' as u32); // Cast char as u32 to get the hexadecimal value
+    println!("{:X}", 'H' as u32);
+    println!("{:X}", '居' as u32);
+    println!("{:X}", 'い' as u32);
+
+    println!("\u{D589}, \u{48}, \u{5C45}, \u{3044}"); // Try printing them with unicode escape \u
+}
+```
+
+지금까지 `{}`로 하거나 `{:?}` 또는 `{:#?}`로 변수를 출력했는데 사실은 이것 말고도 다른 많은 방법들이 있다.
+
+예를 들어 `reference`를 출력 하고 싶으면 `{:p}`를 사용할 수 있다.
+결과는 실행 할때 마다 다를 것이다
+
+```rs
+fn main() {
+    let number = 9;
+    let number_ref = &number;
+    println!("{:p}", number_ref);
+}
+```
+
+또는 binary(2진법)나 hexadecimal(16진법), octal(8진법)을 출력하고 싶다면 각각 `{:b}`, `{:x}`, `{:o}`로 사용하면 된다.
+
+```rs
+fn main() {
+    let number = 555;
+    println!("Binary: {:b}, hexadecimal: {:x}, octal: {:o}", number, number, number);
+}
+```
+
+또 순서를 바꾸기 위해 `{}`사이에 숫자를 넣기도 한다
+
+```rs
+fn main() {
+    let father_name = "Vlad";
+    let son_name = "Adrian Fahrenheit";
+    let family_name = "Țepeș";
+    println!("This is {1} {2}, son of {0} {2}.", father_name, son_name, family_name);
+}
+
+//결과
+// This is Adrian Fahrenheit Țepeș, son of Vlad Țepeș.
+```
+
+다른 방법도 있는데 각각 `{}` 사이에 이름을 정해서 변수와 연결하는 것도 있다.
+
+```rs
+fn main() {
+    println!(
+        "{city1} is in {country} and {city2} is also in {country},
+but {city3} is not in {country}.",
+        city1 = "Seoul",
+        city2 = "Busan",
+        city3 = "Tokyo",
+        country = "Korea"
+    );
+}
+
+// 결과
+//Seoul is in Korea and Busan is also in Korea,
+//but Tokyo is not in Korea.
+```
+
+또 다른 방법으론 `ㅎ`다섯 개 사이에 `a`를 넣고 싶다면 다음과 같이 하면 된다.
+
+```rs
+fn main() {
+    let letter = "a";
+    println!("{:ㅎ^11}", letter);
+}
+
+// 결과
+//ㅎㅎㅎㅎㅎaㅎㅎㅎㅎㅎ
+```
+
+일단 `{:ㅎ^11}` 이거의 의미를 설명하자면 콜론 앞부분에는 변수가 들어간다.<br />
+그래서 위 예제의 println은 다음과 같이도 쓸 수 있다.
+
+```rs
+fn main() {
+    let letter = "a";
+    println!("{value:ㅎ^11}", value = letter);
+}
+
+// 결과
+//ㅎㅎㅎㅎㅎaㅎㅎㅎㅎㅎ
+```
+
+그리고 콜론 뒤에는 `ㅎ^11`이 있는데 이건 가운데 있는 기호를 잘 봐야 하는데 `<`, `^`, `>` 이렇게 사용할 수 있다. `<`의 의미는 변수의 왼쪽에 `ㅎ`들을 두겠다는 거고,
+`>`의 의미는 오른쪽에, `^`의 의미는 가운데 이다.
+
+마지막으로 맨 뒤에 숫자는 여기에 들어올 수 있는 글자의 길이 이다. 그래서 최솟값고 최댓값을 넣을 수 있는데 지금은 최소 11글자를 `ㅎ`으로 채우겠다는 거고 그 뒤에 `.`을 붙이고 숫자를 넣으면 그게 최댓값이 되고 만약 변수의 글자 길이가 설정한 최댓값을 넘어가면 최댓값에서 끊기게 된다.
+
+```rs
+fn main() {
+    let letter = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    println!("{value:ㅎ<11.20}", value = letter);
+}
+
+//결과
+// aaaaaaaaaaaaaaaaaaaa
+```
+
+그래서 이걸 아래와 같이 활용할 수 있을 것 같다
+
+```rs
+fn main() {
+    let title = "TODAY'S NEWS";
+    println!("{:-^30}", title); // no variable name, pad with -, put in centre, 30 characters long
+    let bar = "|";
+    println!("{: <15}{: >15}", bar, bar); // no variable name, pad with space, 15 characters each, one to the left, one to the right
+    let a = "SEOUL";
+    let b = "TOKYO";
+    println!("{city1:-<15}{city2:->15}", city1 = a, city2 = b); // variable names city1 and city2, pad with -, one to the left, one to the right
+}
+```
+
+```
+---------TODAY'S NEWS---------
+|                            |
+SEOUL--------------------TOKYO
+```
