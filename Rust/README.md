@@ -782,3 +782,95 @@ fn main() {
 |                            |
 SEOUL--------------------TOKYO
 ```
+
+## Strings
+
+Rust에는 2가지 string 타입이 있다. `String`과 `&str`인데 서로 무슨 차이가 있을까?
+
+- 우선 `&str`은 simple string이라고 한다. 즉 `let my_variable = "Hello, world!"`이렇게 변수를 선언 했을 때 `&str`타입의 변수를 만든 것이다. 그리고 `&str`은 매우 빠르다.
+- `String`은 좀 더 복잡한 string이다. `&str` 보다 더 느리지만 그만큼 가지고 있는 함수도 많다. `String`은 pointer 이고 data는 heap에 있다.
+
+또한 `&str`도 앞에 `&`가 있는 걸 볼 수 있는데 그 이유는 str을 사용하기 위해선 reference가 필요하기 때문이다. stak을 사용하려면 사이즈를 알아야 하는데 그것 때문에 `&`를 붙여준다.
+
+`&str`과 `String`은 둘다 UTF-8 형식이다. 사용은 아래와 같이 한다.
+
+```rs
+fn main() {
+    let name = "서태지"; // This is a Korean name. No problem, because a &str is UTF-8.
+    let other_name = String::from("Adrian Fahrenheit Țepeș"); // Ț and ș are no problem in UTF-8.
+}
+```
+
+비록 달라 보이지만 둘은 연결되어 있다.
+
+출력 할 때 안에 이모지까지 넣을 수 있다
+
+```rs
+fn main() {
+    let name = "😂";
+    println!("My name is actually {}", name);
+}
+```
+
+`str`앞에 `$`를 붙이는 이유를 다시 이해해 보자면<br>
+str은 dynamically sized 타입이다 즉 사이즈가 다를 수 있다는 뜻<br>
+예를 들어 `Teemo`와 `I love Teemo`의 사이즈는 서로 다르다.
+
+```rs
+fn main() {
+    println!("A String is always {:?} bytes. It is Sized.", std::mem::size_of::<String>()); // std::mem::size_of::<Type>() gives you the size in bytes of a type
+    println!("And an i8 is always {:?} bytes. It is Sized.", std::mem::size_of::<i8>());
+    println!("And an f64 is always {:?} bytes. It is Sized.", std::mem::size_of::<f64>());
+    println!("But a &str? It can be anything. 'Teemo' is {:?} bytes. It is not Sized.", std::mem::size_of_val("Teemo")); // std::mem::size_of_val() gives you the size in bytes of a variable
+    println!("And 'I love Teemo' is {:?} bytes. It is not Sized.", std::mem::size_of_val("I love Teemo"));
+}
+```
+
+```
+A String is always 24 bytes. It is Sized.
+And an i8 is always 1 bytes. It is Sized.
+And an f64 is always 8 bytes. It is Sized.
+But a &str? It can be anything. '서태지' is 9 bytes. It is not Sized.
+And 'Adrian Fahrenheit Țepeș' is 25 bytes. It is not Sized.
+```
+
+`&`는 포인터로 만들어 주고 Rust는 포인터의 사이즈를 알고 하기 때문에 필요한 것이다.<br>
+그래서 포인터는 stack으로 간다. 만약 `&`를 없이 적어버리면 Rust는 사이즈를 몰라 문제가 생긴다.
+
+`String`으로 만드는 여러가지 방법들
+
+- `String::from("This is the string text");`
+- `"This is the string text".to_string()`
+- 마지막으로 `format!` 인데 이건 `println!`와 비슷하게 사용이 가능하다. 그래서 아래와 같이 사용이 가능하다.
+
+```rs
+fn main() {
+    let my_name = "Billybrobby";
+    let my_country = "USA";
+    let my_home = "Korea";
+
+    let together = format!(
+        "I am {} and I come from {} but I live in {}.",
+        my_name, my_country, my_home
+    );
+}
+```
+
+내 영어 실력이 좋지 않아 다음은 뭔 소린지 모르겠지만
+
+```rs
+fn main() {
+    let my_string = "Try to make this a String".into(); // ⚠️
+}
+```
+
+이렇게 하면 에러가 나는데 `&str`에서는 `into()` 쓸 수 없으니 다른걸로 바꾸라는 것 같다.<br>
+그래서 아래와 같이 바꾸면
+
+```rs
+fn main() {
+    let my_string: String = "Try to make this a String".into();
+}
+```
+
+에러를 지울 수 있다
