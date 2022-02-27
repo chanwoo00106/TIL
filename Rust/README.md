@@ -874,3 +874,25 @@ fn main() {
 ```
 
 에러를 지울 수 있다
+
+## const and static
+
+변수를 선언하는 방법에는 `let` 뿐만 아니라 2가지가 있다. `const`랑 `static`이라는 것들이다.
+
+- `const`는 절대 변하지 않는 변수이다. 그러므로 변수의 값을 절대 바꿀 수 없다<br>
+  그러다 보니 shadowing도 안 된다.
+- `static`은 `const`와 많이 비슷하다. 하지만 `static`은 메모리 위치가 고정되어 있고 전역 변수로도 사용이 가능하다.
+
+이 둘은 진짜 비슷하다. 그래도 Rust programmers는 `static` 보단 `const`를 더 자주 사용한다고 한다.
+
+`const`와 `static`은 변수명을 대문자로 해주는 게 좋다. 그래야지 절대 변하지 않는 상수인 것을 쉽게 구분 할 수 있기 때문이다.<br>
+그리고 보통 main 바깥에다 선언을 한다고 한다.
+
+사용 예시:
+
+```rs
+const NUMBER_OF_MONTHS: u32 = 12;
+static SEASONS: [&str; 4] = ["Spring", "Summer", "Fall", "Winter"];
+```
+
+또 이 둘을 선언 할 때는 타입을 생략할 수 없는 것 같다.
