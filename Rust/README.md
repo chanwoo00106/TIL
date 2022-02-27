@@ -896,3 +896,42 @@ static SEASONS: [&str; 4] = ["Spring", "Summer", "Fall", "Winter"];
 ```
 
 또 이 둘을 선언 할 때는 타입을 생략할 수 없는 것 같다.
+
+## More on references
+
+reference는 Rust에서 굉장히 중요하다. Rust는 reference를 사용해서 메모리 접근이 안전한지 확인한다. 알다시피 `$`는 reference를 만든다.
+
+```rs
+fn main() {
+    let country = String::from("Austria");
+    let ref_one = &country;
+    let ref_two = &country;
+
+    println!("{}", ref_one);
+}
+
+//결과
+// Austria
+```
+
+코드에서 `country`는 String이고 그 다음에 있는 reference 두개는 `country`이다.<br>
+이것들은 `&String`타입을 가지고 있는데 이것들은 "문자열의 참조"이다.<br>
+reference는 100개를 만들어도 문제가 없다.
+
+하지만 아래 예제에는 문제가 있다.
+
+```rs
+fn return_str() -> &str {
+    let country = String::from("Austria");
+    let country_ref = &country;
+    country_ref // ⚠️
+}
+
+fn main() {
+    let country = return_str();
+}
+```
+
+`return_str`는 String을 만드는 함수이다. 하지만 `return_str`는 String의 reference를 return 하고 있다. 그리고 문자열 `country`는 오직 함수 안에만 있다 사라진다. 저 변수는 컴퓨터가 메모리를 정리하거나 다시 사용할 때 지워지게 된다. 따라서 `country_ref`는 사라진 메모리를 참조하게 된다. 그래서 Rust는 메모리 실수하는 것을 방지한다.
+
+즉 `&String`은 `String`이 사라질 때 같이 사라지게 된다. 그러므로 `소유권`을 전달하지 않는다.
