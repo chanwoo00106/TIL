@@ -935,3 +935,92 @@ fn main() {
 `return_str`는 String을 만드는 함수이다. 하지만 `return_str`는 String의 reference를 return 하고 있다. 그리고 문자열 `country`는 오직 함수 안에만 있다 사라진다. 저 변수는 컴퓨터가 메모리를 정리하거나 다시 사용할 때 지워지게 된다. 따라서 `country_ref`는 사라진 메모리를 참조하게 된다. 그래서 Rust는 메모리 실수하는 것을 방지한다.
 
 즉 `&String`은 `String`이 사라질 때 같이 사라지게 된다. 그러므로 `소유권`을 전달하지 않는다.
+
+## Mutable references
+
+만약 reference의 데이터를 바꾸고 싶다면 `mutable reference`를 사용하면 된다.<br>
+`mutable reference`를 사용하려면 `&` 대신 `&mut`를 사용하면 된다.
+
+```rs
+fn main() {
+    let mut my_number = 8; // don't forget to write mut here!
+    let num_ref = &mut my_number;
+}
+```
+
+위 예제에서 `my_number`의 타입은 `i32`가 되고 `num_ref`의 타입은 `&mut i32`가 된다. (우리는 이걸 `i32`에 대한 변경가능한 참조 라고 한다)
+
+여기서 그냥 변수를 바꾸듯이 reference를 바꿔버리면 안 된다. 이유는 이 reference의 타입은 `&i32`이기 때문이다. 그러므로 `*`을 사용해서 반대로 참조하면 된다. 그리고 `*`은 `&`를 지울 수 있다.
+
+```rs
+fn main() {
+    let mut my_number = 8;
+    let num_ref = &mut my_number;
+    *num_ref += 10; // Use * to change the i32 value.
+    println!("{}", my_number);
+
+    let second_number = 800;
+    let triple_reference = &&&second_number;
+    println!("Second_number = triple_reference? {}", second_number == ***triple_reference);
+}
+// 결과
+//18
+//Second_number = triple_reference? true
+```
+
+`&`를 사용하면 `referencing`이라 부르고 `*`을 사용하면 `dereferencing`이라 부른다.
+
+Rust에는 immutable reference와 mutable reference를 위한 2가지 규칙이 있다.
+
+- Rule 1 : immutable reference는 100개, 1000개를 만들어도 문제가 없다.
+- Rule 2 : mutable reference는 오직 하나만 가질 수 있다. 또한 immutable reference와 mutable reference를 함께 가질 수는 없다.
+
+왜냐하면 mutable reference는 값을 변경할 수 있는데 내가 이 값을 변경하면 다른 reference도 그걸 읽을 수 있기 때문이다.
+
+그 다음은 Powerpoint presentation을 예로 들어서 열심히 번역하기 귀찮으니 넘어가자 ^^
+
+대신 아래 예시를 보고 이해하자
+
+보면 number라는 변수를 `number_ref` 와 `number_change`로 둘이 참조를 하고 있는데 하나는 mutable 이고 하나는 immutable 이다.
+
+```rs
+fn main() {
+    let mut number = 10;
+    let number_ref = &number;
+    let number_change = &mut number;
+    *number_change += 10;
+    println!("{}", number_ref); // ⚠️
+}
+```
+
+실행 결과
+
+```
+error[E0502]: cannot borrow `number` as mutable because it is also borrowed as immutable
+ --> src\main.rs:4:25
+  |
+3 |     let number_ref = &number;
+  |                      ------- immutable borrow occurs here
+4 |     let number_change = &mut number;
+  |                         ^^^^^^^^^^^ mutable borrow occurs here
+5 |     *number_change += 10;
+6 |     println!("{}", number_ref);
+  |                    ---------- immutable borrow later used here
+```
+
+그런데 아래 코드는 에러 없이 잘 작동 하는 것을 볼 수 있다.
+
+```rs
+fn main() {
+    let mut number = 10;
+    let number_change = &mut number; // create a mutable reference
+    *number_change += 10; // use mutable reference to add 10
+    let number_ref = &number; // create an immutable reference
+    println!("{}", number_ref); // print the immutable reference
+}
+```
+
+이 결과는 `20`이 잘 나오는 걸 볼 수 있다.
+
+그 이유는 컴파일러가 충분히 똑똑하지만 이해하지 못하는 코드도 있기 때문이다.<br >
+일단 `number`를 수정하기 위해서 `number_change`를 사용했는데 number_ref를 사용한 후로는 `number`를 수정하지 않아서 문제를 잡지를 못하고 있다. 그래도 어찌 됐든 immutable reference와 mutable reference를 같이 쓰면 안 된다.
