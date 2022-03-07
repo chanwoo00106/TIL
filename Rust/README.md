@@ -1024,3 +1024,102 @@ fn main() {
 
 그 이유는 컴파일러가 충분히 똑똑하지만 이해하지 못하는 코드도 있기 때문이다.<br >
 일단 `number`를 수정하기 위해서 `number_change`를 사용했는데 number_ref를 사용한 후로는 `number`를 수정하지 않아서 문제를 잡지를 못하고 있다. 그래도 어찌 됐든 immutable reference와 mutable reference를 같이 쓰면 안 된다.
+
+## Giving references to functions
+
+reference는 함수에 매우 유용하다. 그 이유는 Rust에서 변수는 오직 하나의 주인 만을 갖기 때문이다.
+
+아래 코드는 동작하지 않는다.
+
+```rs
+fn print_country(country_name: String) {
+    println!("{}", country_name);
+}
+
+fn main() {
+    let country = String::from("Austria");
+    print_country(country); // We print "Austria"
+    print_country(country); // ⚠️ That was fun, let's do it again!
+}
+```
+
+그 이유는 `country`가 파괴되었기 때문이다. 일단 순서대로 설명을 하자면
+
+- step 1: `country`라는 문자열 변수를 만들었고 그 문자열의 주인은 `country`이다.
+- step 2: 그 다음 `country`를 `print_country`에 보낸다. 그런데 `print_country`에서는 `->`가 없어서 아무것도 반환하지 않는다. 그러므로 `country`는 죽는다.
+- step 3: 마지막으로 `country`를 `print_country`로 보낸다. 하지만 `country`는 이미 죽었기 때문에 에러가 발생한다
+
+이 에러를 막기 위해 `print_country`에서 `country`를 반환합니다.
+
+```rs
+fn print_country(country_name: String) -> String {
+    println!("{}", country_name);
+    country_name // return it here
+}
+
+fn main() {
+    let country = String::from("Austria");
+    let country = print_country(country); // we have to use let here now to get the String back
+    print_country(country);
+}
+
+// 출력 결과
+//Austria
+//Austria
+```
+
+이걸 좀더 좋은 방법으로 고치려면 `&`를 붙이면 된다
+
+```rs
+fn print_country(country_name: &String) {
+    println!("{}", country_name);
+}
+
+fn main() {
+    let country = String::from("Austria");
+    print_country(&country); // We print "Austria"
+    print_country(&country); // That was fun, let's do it again!
+}
+```
+
+이러면 이제부턴 `print_country`에서 string reference를 받게 하고 값을 넘겨 줄 때 reference를 넘겨주면 문제 없이 동작한다.
+
+또 mutable reference로도 보내도 된다.
+
+```rs
+fn add_hungary(country_name: &mut String) { // first we say that the function takes a mutable reference
+    country_name.push_str("-Hungary"); // push_str() adds a &str to a String
+    println!("Now it says: {}", country_name);
+}
+
+fn main() {
+    let mut country = String::from("Austria");
+    add_hungary(&mut country); // we also need to give it a mutable reference.
+}
+
+// 결과
+//Now it says: Austria-Hungary
+```
+
+결론
+
+- `fn function_name(variable: String)`은 변수의 주인은 넘겨주는 거고
+- `fn function_name(variable: &String)`은 변수를 빌리는 것이다
+- `fn function_name(variable: &mut String)`은 변수를 빌리면서 수정 할 수 있다.
+
+마지막으로 아래 예제를 보자
+
+```rs
+fn main() {
+    let country = String::from("Austria"); // country is not mutable, but we are going to print Austria-Hungary. How?
+    adds_hungary(country);
+}
+
+fn adds_hungary(mut country: String) { // Here's how: adds_hungary takes the String and declares it mutable!
+    country.push_str("-Hungary");
+    println!("{}", country);
+}
+```
+
+실패 할 것 같지만 잘 동작한다. 이유는 `mut country`는 참조 가 아니기 때문이다.<br>
+사실은 나도 잘 몰라서 여기까지만 하겠다.
