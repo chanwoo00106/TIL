@@ -1220,3 +1220,50 @@ fn main() {
 ```
 
 저 변수 선언은 결국 `let my_number = { 100 };`과 같다.
+
+## Collection types
+
+`Collection types`이라고 하는데 그냥 배열이다. 대신 조건이 있다
+
+- 크기를 변경해서는 안되며,
+- 동일한 유형만 포함해야 한다.
+
+배열의 타입은 다음과 같다 `[type; number]` 예를 들어 `["Teemo", "is", "best"]`의 타입은 `[&str; 3]`
+
+동일한 값이 들어있는 배열을 원한다면 다음과 같이 쓸 수 있다. 이건 큰 buffer를 만들 때 사용된다.
+
+```rs
+fn main() {
+    let my_array = ["a"; 10];
+    println!("{:?}", my_array);
+}
+
+// 출력 결과
+// ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a"]
+```
+
+다른 언어 처럼 배열의 위치를 이용해 안에 특정 값을 찾을 수 있다
+
+```rs
+fn main() {
+    let my_numbers = [0, 10, -20];
+    println!("{}", my_numbers[1]); // prints 10
+}
+```
+
+또 `...`을 사용해서 배열을 자를 수 있다.
+
+```rs
+fn main() {
+    let array_of_ten = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    let three_to_five = &array_of_ten[2..5];
+    let start_at_two = &array_of_ten[1..];
+    let end_at_five = &array_of_ten[..5];
+    let everything = &array_of_ten[..];
+
+    println!("Three to five: {:?}, start at two: {:?}, end at five: {:?}, everything: {:?}", three_to_five, start_at_two, end_at_five, everything);
+}
+```
+
+`...`앞에는 시작 index를, 뒤에는 마지막 index를 적어주면 된다. 아무것도 적지 않으면 시작 index 또는 마지막 index가 된다.
