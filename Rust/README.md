@@ -1123,3 +1123,37 @@ fn adds_hungary(mut country: String) { // Here's how: adds_hungary takes the Str
 
 실패 할 것 같지만 잘 동작한다. 이유는 `mut country`는 참조 가 아니기 때문이다.<br>
 사실은 나도 잘 몰라서 여기까지만 하겠다.
+
+## Ownership
+
+아래 예제를 보면 잘 실행될 것 같지만 에러가 나게 된다.
+
+```rs
+fn main() {
+    let s1 = String::from("Hello");
+    let s2 = s1;
+    println!("{}", s1);
+}
+```
+
+이 문제는 바로 위에서 배웠던 `Giving references to functions`와 같은 문제이다<br>
+이유를 간단하게 설명하자면 `s1`에서 `s2`로 값이 갈 때 copy된게 아닌 move가 됐기 때문이다. `String::from()`으로 변수를 만들면 이 값이 heap에 저장이 되는데 heap에 저장이 된 변수들은 위 예제와 같은 상황이 주어질 때 copy가 아닌 move를 하게 된다. 그러면서 원래 있던 자리인 `s1`은 사라지게 된다.
+
+하지만 move가 되지 않는 type도 있는데 그것들은 simple type들이다<br>
+대충 `i32`, `i64`, `str`, `f32`, `bool` 등 여러가지가 있다.
+
+이것들의 type의 크기는 예측하기 쉬워서 stack에 저장이 되는데 stack은 기본적으로 move가 아닌 copy를 한다. 그래서 아래 예제는 정상작동을 한다.
+
+```rs
+fn main() {
+    let s1 = S10
+    let s2 = s1;
+    println!("{}", s1);
+}
+```
+
+마지막으로 `Ownership Rules`을 설명하자면
+
+- Rust에서 각각의 변수들은 owner라 불리는 변수를 가지고 있다.
+- 한 번에 하나의 owner만 존재할 수 있다
+- scope을 벗어날 때 그 변수는 자동으로 drop된다.
