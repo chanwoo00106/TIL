@@ -1157,3 +1157,66 @@ fn main() {
 - Rust에서 각각의 변수들은 owner라 불리는 변수를 가지고 있다.
 - 한 번에 하나의 owner만 존재할 수 있다
 - scope을 벗어날 때 그 변수는 자동으로 drop된다.
+
+## Variables without values
+
+Rust에는 값이 없는 변수를 만들 수 있다
+
+```rs
+fn main() {
+    let my_variable; // ⚠️
+}
+```
+
+하지만 이렇게 변수를 만들면 아직은 사용할 수 없는 상태가 되고 Rust컴파일러는 오류를 계속해서 발생시킨다. 그래도 이것들은 가끔씩은 유용할 수 있다
+
+코드블럭이 있고 그 안에 변수 값이 있고 그 변수를 코드블럭 바깥에서도 사용하고 싶을 때 굉장히 유용하다
+
+```rs
+fn loop_then_return(mut counter: i32) -> i32 {
+    loop {
+        counter += 1;
+        if counter % 50 == 0 {
+            break;
+        }
+    }
+    counter
+}
+
+fn main() {
+    let my_number;
+
+    {
+        // Pretend we need to have this code block
+        let number = {
+            // Pretend there is code here to make a number
+            // Lots of code, and finally:
+            57
+        };
+
+        my_number = loop_then_return(number);
+    }
+
+    println!("{}", my_number);
+}
+
+출력 결과
+//100
+```
+
+`my_number = loop_then_return(number)`부분을 보면 함수 실행이 끝나고 값을 `my_number`로 넘겨주는 걸 볼 수 있는데 이걸 만약 `let my_number = loop_then_return(number)`로 작성했다면 `my_number`는 코드블럭에서 나가자 마자 사라졌을 것이다
+
+그래서 아래와 같은 것도 할 수 있다.
+
+```rs
+fn main() {
+    let my_number;
+    {
+        my_number = 100;
+    }
+
+    println!("{}", my_number);
+}
+```
+
+저 변수 선언은 결국 `let my_number = { 100 };`과 같다.
