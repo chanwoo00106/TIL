@@ -1267,3 +1267,105 @@ fn main() {
 ```
 
 `...`앞에는 시작 index를, 뒤에는 마지막 index를 적어주면 된다. 아무것도 적지 않으면 시작 index 또는 마지막 index가 된다.
+
+## Vectors
+
+`&str`과 `String`이 같이 있는 것 과 같이 이것도 array와 vectors가 있다.<br>
+array는 속도가 빠른 대신 기능이 적고 vectors는 기능이 많은 대신 속도가 느리다.
+
+사용방법은 아래와 같다.
+
+```rs
+fn main() {
+    let name1 = String::from("Windy");
+    let name2 = String::from("Gomesy");
+
+    let mut my_vec = Vec::new();
+    // If we run the program now, the compiler will give an error.
+    // It doesn't know the type of vec.
+
+    my_vec.push(name1); // Now it knows: it's Vec<String>
+    my_vec.push(name2);
+}
+```
+
+Vector의 타입을 작성하고 싶다면 아래와 같이 하면 된다
+
+```rs
+fn main() {
+    let mut my_vec: Vec<String> = Vec::new(); // The compiler knows the type
+                                             // so there is no error.
+}
+```
+
+Vector를 만드는 또다른 방법은 `vec!`를 사용하는 것이다. 배열 앞에 `vec!`를 적어주면 Vector가 된다.
+
+```rs
+fn main() {
+    let mut my_vec = vec![8, 10, 10];
+}
+```
+
+위 예제의 vector의 타입은 `Vec<i32>`이고 읽는 법은 "백터의 i32" 이다. `Vec<String>`은 "백터의 string"이라 부른다 또 `Vec<Vec<String>>`는 "백터의 백터의 string"이라 부른다
+
+백터도 배열과 같이 자를 수 있다
+
+```rs
+fn main() {
+    let vec_of_ten = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    // Everything is the same as above except we added vec!.
+    let three_to_five = &vec_of_ten[2..5];
+    let start_at_two = &vec_of_ten[1..];
+    let end_at_five = &vec_of_ten[..5];
+    let everything = &vec_of_ten[..];
+
+    println!("Three to five: {:?},
+start at two: {:?}
+end at five: {:?}
+everything: {:?}", three_to_five, start_at_two, end_at_five, everything);
+}
+```
+
+백터는 용량을 가지고 있는데 주어진 용량을 초과하면 자동으로 용량이 올라간다.<br>
+그 용량은 `capacity`로 알 수 있다.
+
+```rs
+fn main() {
+    let mut num_vec = Vec::new();
+    println!("{}", num_vec.capacity()); // 0 elements: prints 0
+    num_vec.push('a'); // add one character
+    println!("{}", num_vec.capacity()); // 1 element: prints 4. Vecs with 1 item always start with capacity 4
+    num_vec.push('a'); // add one more
+    num_vec.push('a'); // add one more
+    num_vec.push('a'); // add one more
+    println!("{}", num_vec.capacity()); // 4 elements: still prints 4.
+    num_vec.push('a'); // add one more
+    println!("{}", num_vec.capacity()); // prints 8. We have 5 elements, but it doubled 4 to 8 to make space
+}
+
+/*출력 결과
+0
+4
+4
+8
+*/
+```
+
+한 번에 용량을 크게 잡을 수 있다.
+
+```rs
+fn main() {
+    let mut num_vec = Vec::with_capacity(8); // Give it capacity 8
+    num_vec.push('a'); // add one character
+    println!("{}", num_vec.capacity()); // prints 8
+    num_vec.push('a'); // add one more
+    println!("{}", num_vec.capacity()); // prints 8
+    num_vec.push('a'); // add one more
+    println!("{}", num_vec.capacity()); // prints 8.
+    num_vec.push('a'); // add one more
+    num_vec.push('a'); // add one more // Now we have 5 elements
+    println!("{}", num_vec.capacity()); // Still 8
+}
+```
+
+이렇게 하면 재할당이 없어서 더 빠르게 백터를 사용할 수 있습니다
