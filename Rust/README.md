@@ -1370,7 +1370,7 @@ fn main() {
 
 이렇게 하면 재할당이 없어서 더 빠르게 백터를 사용할 수 있습니다
 
-# Tuples
+## Tuples
 
 Rust에서는 `()`를 사용해 tuple을 사용할 수 있다. 우리는 이미 많은 tuple을 봤는데 함수 앞에 있는 `()`가 tuple이다. 그래서 저 tuple은 빈 tuple로 아무것도 들어 있지 않는다.
 
@@ -1442,3 +1442,175 @@ fn main() {
     let (_, _, variable) = (str_vec[0], str_vec[1], str_vec[2]);
 }
 ```
+
+## Control flow
+
+`Control flow`는 코드가 어떤 상황인지 말해준다 즉 `if`문 같은 걸 말한다.
+
+```rs
+fn main() {
+    let my_number = 5;
+    if my_number == 7 {
+        println!("It's seven");
+    }
+}
+```
+
+c에서 배운 if문에서 소괄호만 없다고 생각하면 된다. 이거 말고 다른 것도 있는데<br>
+`match` 라고 c언어의 `swich case` 격인 문법이 있다
+
+```rs
+fn main() {
+    let my_number: u8 = 5;
+    match my_number {
+        0 => println!("it's zero"),
+        1 => println!("it's one"),
+        2 => println!("it's two"),
+        _ => println!("It's some other number"),
+    }
+}
+```
+
+`my_number`가 `0` 일때, `1` 일때, `2`일때를 적었는데 마지막은 `_`인데 이건 `default`로 위에 해당하는 게 아무것도 없을 때 최종적으로 들어온다. 이게 없으면 에러를 낸다.
+
+`match`를 사용해서 변수를 만들 수 있다.
+
+```rs
+fn main() {
+    let my_number = 5;
+    let second_number = match my_number {
+        0 => 0,
+        5 => 10,
+        _ => 2,
+    };
+}
+```
+
+위 예제를 보면 `my_number`가 5이기 때문에 match에서는 10을 반환하게 되고 second_number는 10이 된다.
+
+아래 예제처럼 tuple도 받을 수 있다
+
+```rs
+fn main() {
+    let sky = "cloudy";
+    let temperature = "warm";
+
+    match (sky, temperature) {
+        ("cloudy", "cold") => println!("It's dark and unpleasant today"),
+        ("clear", "warm") => println!("It's a nice day"),
+        ("cloudy", "warm") => println!("It's dark but not bad"),
+        _ => println!("Not sure what the weather is."),
+    }
+}
+```
+
+`match` 안에 `if`를 넣을 수도 있다
+
+```rs
+fn main() {
+    let children = 5;
+    let married = true;
+
+    match (children, married) {
+        (children, married) if married == false => println!("Not married with {} children", children),
+        (children, married) if children == 0 && married == true => println!("Married but no children"),
+        _ => println!("Married? {}. Number of children: {}.", married, children),
+    }
+}
+```
+
+또한 저 부분에 \_를 넣고 싶은 만큼 넣을 수 있다
+
+```rs
+fn match_colours(rbg: (i32, i32, i32)) {
+    match rbg {
+        (r, _, _) if r < 10 => println!("Not much red"),
+        (_, b, _) if b < 10 => println!("Not much blue"),
+        (_, _, g) if g < 10 => println!("Not much green"),
+        _ => println!("Each colour has at least 10"),
+    }
+}
+
+fn main() {
+    let first = (200, 0, 0);
+    let second = (50, 50, 50);
+    let third = (200, 50, 0);
+
+    match_colours(first);
+    match_colours(second);
+    match_colours(third);
+
+}
+```
+
+출력 결과
+
+```
+Not much blue
+Each colour has at least 10
+Not much green
+```
+
+하지만 `match`에는 반환 타입이 전부 같아야 한다
+
+```rs
+fn main() {
+    let my_number = 10;
+    let some_variable = match my_number {
+        10 => 8,
+        _ => "Not ten", // ⚠️
+    };
+}
+```
+
+아래와 같은 예제도 마찬가지다
+
+```rs
+fn main() {
+    let my_number = 10;
+    let some_variable = if my_number == 10 { 8 } else { "something else "}; // ⚠️
+}
+```
+
+하지만 아래 if문은 에러가 나지 않는다.<br>
+이유는 위 예제에서는 if문에서 바록 값을 반환해서 그러고 아래는 if문에서 반환하지 않고 변수에 저장해서 이다.
+
+```rs
+fn main() {
+    let my_number = 10;
+
+    if my_number == 10 {
+        let some_variable = 8;
+    } else {
+        let some_variable = "Something else";
+    }
+}
+```
+
+여기서 `@`도 사용할 수 있는데 왜 사용하는지는 잘 모르겠지만 사용 방법은 아래와 같다
+
+```rs
+fn match_number(input: i32) {
+    match input {
+    number @ 4 => println!("{} is an unlucky number in China (sounds close to 死)!", number),
+    number @ 13 => println!("{} is unlucky in North America, lucky in Italy! In bocca al lupo!", number),
+    _ => println!("Looks like a normal number"),
+    }
+}
+
+fn main() {
+    match_number(50);
+    match_number(13);
+    match_number(4);
+}
+```
+
+출력 결과
+
+```
+Looks like a normal number
+13 is unlucky in North America, lucky in Italy! In bocca al lupo!
+4 is an unlucky number in China (sounds close to 死)!
+```
+
+`input` 값을 `number`에 넣어 안에서 사용할 수 있다.
