@@ -1369,3 +1369,76 @@ fn main() {
 ```
 
 이렇게 하면 재할당이 없어서 더 빠르게 백터를 사용할 수 있습니다
+
+# Tuples
+
+Rust에서는 `()`를 사용해 tuple을 사용할 수 있다. 우리는 이미 많은 tuple을 봤는데 함수 앞에 있는 `()`가 tuple이다. 그래서 저 tuple은 빈 tuple로 아무것도 들어 있지 않는다.
+
+```rs
+fn do_something() {}
+```
+
+위 아래 함수는 같은 것을 반환한다
+
+```rs
+fn do_something() -> () {}
+```
+
+tuple 안에는 서로 다른 타입들이 들어갈 수 있고 0, 1, 2로 참조가 가능 하다.
+
+```rs
+fn main() {
+    let random_tuple = ("Here is a name", 8, vec!['a'], 'b', [8, 9, 10], 7.7);
+    println!(
+        "Inside the tuple is: First item: {:?}
+Second item: {:?}
+Third item: {:?}
+Fourth item: {:?}
+Fifth item: {:?}
+Sixth item: {:?}",
+        random_tuple.0,
+        random_tuple.1,
+        random_tuple.2,
+        random_tuple.3,
+        random_tuple.4,
+        random_tuple.5,
+    )
+}
+```
+
+출력 결과
+
+```
+Inside the tuple is: First item: "Here is a name"
+Second item: 8
+Third item: ['a']
+Fourth item: 'b'
+Fifth item: [8, 9, 10]
+Sixth item: 7.7
+```
+
+그래서 `random_tuple`의 타입은 `(&str, i32, Vec<char>, char, [i32; 3], f64)`이다.
+
+또한 다음과 같은 것도 할 수 있습니다
+
+```rs
+fn main() {
+    let str_vec = vec!["one", "two", "three"];
+
+    let (a, b, c) = (str_vec[0], str_vec[1], str_vec[2]); // call them a, b, and c
+    println!("{:?}", b);
+}
+
+//결과
+//two
+```
+
+a, b, c로 받을 때 이중에 필요없는 값이 있다면 `_`로 받으면 된다
+
+```rs
+fn main() {
+    let str_vec = vec!["one", "two", "three"];
+
+    let (_, _, variable) = (str_vec[0], str_vec[1], str_vec[2]);
+}
+```
