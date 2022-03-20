@@ -1614,3 +1614,131 @@ Looks like a normal number
 ```
 
 `input` 값을 `number`에 넣어 안에서 사용할 수 있다.
+
+## Structs
+
+`structs`는 `struct`라는 키워드로 만들 수 있으며 structs 이름은 꼭 `UpperCamelCase`를 사용해야 한다. 만약 그렇게 사용하지 않으면 컴파일러가 경고를 띄울 것이다.
+
+struct에는 3가지 타입이 있는데 첫 번째는 `unit struct`이다. "unit의 의미는 아무것도 갖고 있지 않다." 라는 뜻으로 `unit struct`를 생성할 때 아래와 같이 해주면 된다.
+
+```rs
+struct FileDirectory;
+fn main() {}
+```
+
+다음은 `tuple struct`또는 `unnamed struct`이고 `unnamed struct`인 이유는 오직 타입만 적고 이름은 적지 않기 때문이다. `tuple struct`는 `simple struct`와 struct의 이름을 기억할 필요가 없을 때 좋다
+
+```rs
+struct Colour(u8, u8, u8);
+
+fn main() {
+    let my_colour = Colour(50, 0, 50); // Make a colour out of RGB (red, green, blue)
+    println!("The second part of the colour is: {}", my_colour.1);
+}
+
+// 출력 결과
+//The second part of the colour is: 0
+```
+
+세 번째 타입은 `named struct`로 아마 이게 가장 흔한 struct 일 것이다. 이 struct는 코드블럭 안에 이름과 타입을 적어서 선언한다. 이러한 struct에서는 세미콜론을 적지 않는다.
+
+```rs
+struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
+
+struct SizeAndColour {
+    size: u32,
+    colour: Colour, // And we put it in our new named struct
+}
+
+fn main() {
+    let my_colour = Colour(50, 0, 50);
+
+    let size_and_colour = SizeAndColour {
+        size: 150,
+        colour: my_colour
+    };
+}
+```
+
+`named struct`에서는 콤마에 의해 필드가 나눠진다
+
+```rs
+struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
+
+struct SizeAndColour {
+    size: u32,
+    colour: Colour, // And we put it in our new named struct
+}
+
+fn main() {}
+```
+
+하지만 struct의 마지막 필드의 콤마는 굳이 쓸 필요는 없다. 그래도 나중에 아래에 필드를 계속 추가할 것이다 마지막 콤마는 찍어주는 게 좋다.
+
+```rs
+struct Colour(u8, u8, u8); // Declare the same Colour tuple struct
+
+struct SizeAndColour {
+    size: u32,
+    colour: Colour // No comma here
+}
+
+fn main() {}
+```
+
+만약 마지막 필드가 아닌 곳에 콤마가 없다면 에러가 나게 된다
+
+```rs
+struct SizeAndColour {
+    colour: Colour // ⚠️ Whoops! Now this doesn't have a comma.
+    size: u32,
+}
+
+fn main() {}
+```
+
+예를 들어 `Country` struct를 만든다면 안에 `인구`, `수도`, `대통령` 같은 것들이 들어갈 것이다.
+
+```rs
+struct Country {
+    population: u32,
+    capital: String,
+    leader_name: String
+}
+
+fn main() {
+    let population = 329_500_000;
+    let capital = String::from("USA");
+    let leader_name = String::from("Joe Biden");
+
+    let USA = Country {
+        population: population,
+        capital: capital,
+        leader_name: leader_name,
+    };
+
+    println!("{:?}", USA);
+}
+```
+
+그런데 여기서 필드 명과 변수명이 같으면 그냥 적을 수 있다
+
+```rs
+struct Country {
+    population: u32,
+    capital: String,
+    leader_name: String
+}
+
+fn main() {
+    let population = 500_000;
+    let capital = String::from("Elista");
+    let leader_name = String::from("Batu Khasikov");
+
+    let kalmykia = Country {
+        population,
+        capital,
+        leader_name,
+    };
+}
+```
