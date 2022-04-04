@@ -1742,3 +1742,155 @@ fn main() {
     };
 }
 ```
+
+## Enums
+
+`enum`은 짧은 목록이다. 그냥 봤을 때는 `struct`와 비슷해 보이지만 둘은 서로 다르다
+
+`struct`는 많은 것들과 함께 사용하는 반면 `enum`은 많은 선택을 함께 사용합니다.
+
+`enum`을 사용하려면 `enum`이라는 키워드를 적고 코드블럭 안에 콤마로 나누어서 단어를 적으면 된다
+
+```rs
+enum ThingsInTheSky {
+    Sun,
+    Stars,
+}
+
+fn main() {}
+```
+
+아래는 enum을 사용한 예제입니다
+
+```rs
+// create the enum with two choices
+enum ThingsInTheSky {
+    Sun,
+    Stars,
+}
+
+// With this function we can use an i32 to create ThingsInTheSky.
+fn create_skystate(time: i32) -> ThingsInTheSky {
+    match time {
+        6..=18 => ThingsInTheSky::Sun, // Between 6 and 18 hours we can see the sun
+        _ => ThingsInTheSky::Stars, // Otherwise, we can see stars
+    }
+}
+
+// With this function we can match against the two choices in ThingsInTheSky.
+fn check_skystate(state: &ThingsInTheSky) {
+    match state {
+        ThingsInTheSky::Sun => println!("I can see the sun!"),
+        ThingsInTheSky::Stars => println!("I can see the stars!")
+    }
+}
+
+fn main() {
+    let time = 8; // it's 8 o'clock
+    let skystate = create_skystate(time); // create_skystate returns a ThingsInTheSky
+    check_skystate(&skystate); // Give it a reference so it can read the variable skystate
+}
+
+```
+
+> 결과<br>
+> I can see the sun!
+
+다음 예제는 Mood라는 enum에서 ::을 사용해 enum 안에 값을 가져올 수 있는데 match를 통해서 swich case 같은 걸 만들었다
+
+```rs
+enum Mood {
+    Happy,
+    Sleepy,
+    NotBad,
+    Angry,
+}
+
+fn match_mood(mood: &Mood) -> i32 {
+    let happiness_level = match mood {
+        Mood::Happy => 10, // Here we type Mood:: every time
+        Mood::Sleepy => 6,
+        Mood::NotBad => 7,
+        Mood::Angry => 2,
+    };
+    happiness_level
+}
+
+fn main() {
+    let my_mood = Mood::NotBad;
+    let happiness_level = match_mood(&my_mood);
+    println!("Out of 1 to 10, my happiness is {}", happiness_level);
+}
+```
+
+하지만 이것 보다 더 쉽게 쓸 수 있는데
+
+`*`을 사용해서 Mood 안에 있는 값들을 전부 가져올 수 있다.
+
+```rs
+enum Mood {
+    Happy,
+    Sleepy,
+    NotBad,
+    Angry,
+}
+
+fn match_mood(mood: &Mood) -> i32 {
+    use Mood::*; // We imported everything in Mood. Now we can just write Happy, Sleepy, etc.
+    let happiness_level = match mood {
+        Happy => 10, // We don't have to write Mood:: anymore
+        Sleepy => 6,
+        NotBad => 7,
+        Angry => 2,
+    };
+    happiness_level
+}
+
+fn main() {
+    let my_mood = Mood::Happy;
+    let happiness_level = match_mood(&my_mood);
+    println!("Out of 1 to 10, my happiness is {}", happiness_level);
+}
+```
+
+> 결과<br>
+> 0<br>
+> 1<br>
+> 2<br>
+> 3
+
+enum에는 다른 숫자도 줄 수 있다
+
+```rs
+enum Star {
+    BrownDwarf = 10,
+    RedDwarf = 50,
+    YellowStar = 100,
+    RedGiant = 1000,
+    DeadStar,
+}
+
+fn main() {
+    use Star::*;
+    let starvec = vec![BrownDwarf, RedDwarf, YellowStar, RedGiant];
+    for star in starvec {
+        match star as u32 {
+            size if size <= 80 => println!("Not the biggest star."),
+            size if size >= 80 => println!("This is a good-sized star."),
+            _ => println!("That star is pretty big!"),
+        }
+    }
+    println!("What about DeadStar? It's the number {}.", DeadStar as u32);
+}
+```
+
+```
+결과
+Not the biggest star.
+Not the biggest star.
+This is a good-sized star.
+This is a good-sized star.
+What about DeadStar? It's the number 1001.
+```
+
+`DeadStar`의 값은 `RedGiant`의 다음 값인 1001이 된다.
